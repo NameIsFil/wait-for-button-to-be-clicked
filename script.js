@@ -6,7 +6,7 @@ function waitForButtonsToBeClicked(array) {
     return new Promise((resolve, reject) => {
         let clickedButton = undefined;
         for (let i = 0; i < array.length; i++) {
-                if(array[i] !== firstButton || array[i] !== secondButton) {
+                if(array[i] !== firstButton && array[i] !== secondButton) {
                     reject();
                 }
                 firstButton.addEventListener('click', () =>{
