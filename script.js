@@ -1,17 +1,27 @@
 const firstButton = document.querySelector('.first-button');
 const secondButton = document.querySelector('.second-button');
 const array = [firstButton, secondButton]
-let clickedButton = undefined;
 
 function waitForButtonsToBeClicked(array) {
     return new Promise((resolve, reject) => {
+        let clickedButton = undefined;
         for (let i = 0; i < array.length; i++) {
-                if(firstButton === clickedButton) {
-                    resolve();
-                }
-                else if(secondButton === clickedButton) {
+                if(array[i] === firstButton || array[i] === secondButton) {
                     reject();
                 }
+                firstButton.addEventListener('click', () =>{
+                    setTimeout(() => {
+                        clickedButton = firstButton;
+                        resolve();
+                    }, array[i]);
+                });
+                secondButton.addEventListener('click', () =>{
+                    setTimeout(() => {
+                        clickedButton = secondButton;
+                        resolve();
+                    }, array[i]);
+                });
+
         }
     })
 };
@@ -23,13 +33,3 @@ waitForButtonsToBeClicked()
     .catch(() => {
         console.log('One of the provided buttons does not exist');
     });
-
-firstButton.addEventListener('click', () =>{
-    clickedButton = firstButton;
-    waitForButtonsToBeClicked();
-});
-
-secondButton.addEventListener('click', () =>{
-    clickedButton = secondButton;
-    waitForButtonsToBeClicked();
-});
